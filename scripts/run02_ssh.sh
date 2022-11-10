@@ -33,5 +33,5 @@ do
             name="${out_dir}/${f1%.*}-${f2%.*}-umfpack-${i}.dot"
             echo python3 ../algorithm/main.py --ref=$file1 --upd=$file2 -o $name -t 0.8 -l
         done
-    done | xargs -I CMD --max-procs=$MAX_PROCS timeout $TIMEOUT bash -c "CMD"
-done
+    done
+done >> _slurm_all.txt

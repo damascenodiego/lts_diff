@@ -25,5 +25,5 @@ do
             match_file="../subjects/tcp_k_pairs/${f1%.*}-${f2%.*}-50.txt"
             echo python3 ../algorithm/main.py --ref=$file1 --upd=$file2 -o $name -t 0.4 -s "yices" -l -m $match_file
         done
-    done | xargs -I CMD --max-procs=$MAX_PROCS timeout $TIMEOUT bash -c "CMD"
-done
+    done 
+done >> _slurm_all.txt
