@@ -1,6 +1,10 @@
 #!/bin/bash
+#SBATCH --partition=csedu
+#SBATCH --output="logs_ssh-%j.out"
+#SBATCH --cpus-per-task=20
+#SBATCH --time=10:00:00
 
-MAX_PROCS=4
+MAX_PROCS=20
 subjects_dir=../subjects/ssh/
 out_dir=../results/ssh
 END=10
@@ -32,6 +36,6 @@ do
             done
             name="${out_dir}/${f1%.*}-${f2%.*}-umfpack-${i}.dot"
             echo python3 ../algorithm/main.py --ref=$file1 --upd=$file2 -o $name -t 0.8 -l
-        done
+        done #| xargs -I CMD --max-procs=$MAX_PROCS timeout $TIMEOUT bash -c "CMD"
     done
-done >> _slurm_all.txt
+done
