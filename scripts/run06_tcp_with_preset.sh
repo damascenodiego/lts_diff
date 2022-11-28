@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --partition=csedu
 #SBATCH --output="logs_tcp_p50-%j.out"
-#SBATCH --cpus-per-task=20
+#SBATCH --cpus-per-task=10
 #SBATCH --time=10:00:00
 
-MAX_PROCS=20
+MAX_PROCS=10
 subjects_dir=../subjects/tcp/
 out_dir=../results/tcp_preset_50_rerun
 END=10
@@ -28,6 +28,6 @@ do
             name="${out_dir}/${f1%.*}-${f2%.*}-${i}.dot"
             match_file="../subjects/tcp_k_pairs/${f1%.*}-${f2%.*}-50.txt"
             echo python3 ../algorithm/main.py --ref=$file1 --upd=$file2 -o $name -t 0.4 -s "yices" -l -m $match_file
-        done #| xargs -I CMD --max-procs=$MAX_PROCS timeout $TIMEOUT bash -c "CMD"
+        done | xargs -I CMD --max-procs=$MAX_PROCS timeout $TIMEOUT bash -c "CMD"
     done 
 done
